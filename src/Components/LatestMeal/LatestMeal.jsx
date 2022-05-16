@@ -23,7 +23,6 @@ const LatestMeal = () => {
         <div className="row">
           {
             latest.map((item) => (
-
                 <div className="col" key={latest.idMeal}>
                   <div className="box">
                     <Link to={`/latestMeal/${latest.idMeal}`}>

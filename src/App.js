@@ -4,6 +4,9 @@ import Homepage from "./Components/Homepage";
 import MealInfo from "./Components/MealInfo";
 import NotFound from "./Components/NotFound";
 import Footer from "./Components/Footer";
+import Browse from "./Components/Browse";
+import Ingredients from "./Components/Ingredients";
+import LatestMealInfo from "./Components/LatestMealsInfo";
 
 function App() {
   return (
@@ -12,7 +15,10 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Homepage />}/>
+        <Route path="/latestMeal/:id" element={<LatestMealInfo />}/>
         <Route path="/meal/:id" element={<MealInfo />}/>
+        <Route path="/ingredients/:id" element={<Ingredients />}/>
+        <Route path="/browse/:name" element={<Browse />}/>
         <Route path="*" element = {<NotFound />}/>
       </Routes>
       <Footer />

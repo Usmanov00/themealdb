@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from "react-router-dom";
 import logo from '../../assets/images/logo.png'
 import facebook from "../../assets/images/facebook_icon.png";
 import twitter from '../../assets/images/twitter_icon.png'
+import {useNavigate} from 'react-router-dom'
 
 const Header = () => {
+  let navigate = useNavigate()
+  const [search, setSearch] = useState('')
+  const handleChange = (e) => setSearch(e.target.value)
+  const handleSearch = (e) => {
+    if (e.key === 'Enter'){
+      navigate(`/browse/${search}`)
+      setSearch('')
+    }
+  }
   return (
     <div>
       <div className="header-container">
@@ -34,9 +44,13 @@ const Header = () => {
                 </li>
                 <li>
                   <div className="search">
-                    <form action="">
-                      <input type="text" name="s" className="search-form" autoComplete="off" placeholder=" Search"/>
-                    </form>
+                      <input type="text" name="s" className="search-form"
+                             autoComplete="off"
+                             placeholder="Search"
+                             onChange={handleChange}
+                             onKeyPress={handleSearch}
+                             value={search}
+                      />
                   </div>
                 </li>
               </ul>
