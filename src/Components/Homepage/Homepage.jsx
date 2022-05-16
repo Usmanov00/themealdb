@@ -28,7 +28,7 @@ const HomePage = () => {
               <img src={soup} alt=""/>
             </div>
           </div>
-          <hr/>
+          <hr />
         </div>
       </section>
       <div className="container">

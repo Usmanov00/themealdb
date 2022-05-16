@@ -29,7 +29,7 @@ const LatestMeal = () => {
                     <Link to={`/latestMeal/${latest.idMeal}`}>
                       <img src={item.strMealThumb} alt=""/>
                     </Link>
-                    <div className="mealName">
+                    <div className="description">
                       {item.strMeal}
                     </div>
                   </div>
@@ -37,6 +37,7 @@ const LatestMeal = () => {
               )
             )
           }
+
         </div>
       </div>
       <hr/>
