@@ -13,7 +13,7 @@ const Browse = () => {
     <div>
       <div className="row">
       {
-        browse.map((meal, idx) => (
+        browse.map((meal) => (
             <div className="col" key={meal.idMeal}>
               <div className="box">
                 <Link to={`/meal/${meal.idMeal}`}>

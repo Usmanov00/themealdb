@@ -23,9 +23,9 @@ const LatestMeal = () => {
         <div className="row">
           {
             latest.map((item) => (
-                <div className="col" key={latest.idMeal}>
+                <div className="col" key={item.idMeal}>
                   <div className="box">
-                    <Link to={`/latestMeal/${latest.idMeal}`}>
+                    <Link to={`/latest/${item.idMeal}`}>
                       <img src={item.strMealThumb} alt=""/>
                     </Link>
                     <div className="description">

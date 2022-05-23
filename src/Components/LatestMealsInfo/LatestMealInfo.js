@@ -1,57 +1,71 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
+import ReactPlayer from "react-player";
 import axios from "axios";
 
 const LatestMealInfo = () => {
-  const [latestMeals,setLatestMeals] = useState({})
-  const [isLoading,setIsLoading] = useState(true)
-  const [ingredients,setIngredients] = useState([])
-  const getIngredients = () => {
+  const {id} = useParams()
+  const [latest, setLatest] = useState({})
+  const [ingredients, setIngredients] = useState([])
+  const getIngredients = (meal) => {
     let result = []
-    for(let i = 0; i< 20; i++) {
-      if(latestMeals[`strIngredient${i + 1}`])
-        result = [...result,latestMeals[`strIngredient${i + 1}`]]
+    for (let i = 0; i < 20; i++) {
+      if (latest[`strIngredient${i + 1}`]) {
+        result = [...result, latest[`strIngredient${i + 1}`]]
+      }
     }
     setIngredients(result)
   }
-  const {id} = useParams()
-  useEffect(()  => {
+  useEffect(() => {
     axios(`https://www.themealdb.com/api/json/v2/1/lookup.php?i=${id}`)
-      .then((res) => {
-        setLatestMeals(res.data.meals[0])
+      .then(res => {
+        setLatest(res.data.meals[0])
         getIngredients(res.data.meals[0])
-        setIsLoading(false)
       })
   })
-  if(isLoading){
-    return 'kkk'
-  }
   return (
-    <div className="container">
-      <Link
-        to="/"><button
-        className="btn element-btn" >Back</button> </Link>
-      <div className="row">
-        <div  className="col-3">
-          <h2 className="meal-title">{latestMeals.strMeal}</h2>
-          <img className="item-img" src={latestMeals.strMealThumb} alt="" width="100%"/>
+    <div>
+      <div className="container">
+        <div className="row">
+          <div className="col-4">
+            <h3 className="title">{latest.strMeal}</h3>
+            <img src={latest.strMealThumb} alt="" width={300}/>
 
-        </div>
-        <div className="col-8">
-          <h2 className="meal-title">Ingredients</h2>
-          <div className="row">
-            {
-              ingredients.map((ingredient,index) => (
-                <Link style={{paddingLeft: 13, textDecoration: 'none',color:'white'}}  to={`/ingredients/${ingredient}`} key={index} className="item-col ">
-                  <img src={`https://www.themealdb.com/images/ingredients/${ingredient}.png`} alt=""/>
-                  <h4 className="element-title">{ingredient}</h4>
-                </Link>
-              ))
-            }
+          </div>
+          <div className="col-8">
+            <div>
+              <h3 className="title">Ingredients</h3>
+            </div>
+            <div className="row">
+              {
+                ingredients.map((ingredient, idx) => (
+                  <div className="col-4" key={idx}>
+                    <div className="center">
+                      <Link to={`/ingredients/${ingredient}`}>
+                        <img src={`https://www.themealdb.com/images/ingredients/${ingredient}.png`} alt="" width={100}/>
+                        <div className="description">
+                          {ingredient}
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+          <div className="instructions">
+            <div className="instructions-box">
+              {
+                latest.strInstructions
+              }
+              {latest.strMeasure1}
+            </div>
+            <div className="video">
+              <ReactPlayer url={latest.strYoutube}/>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
   );
 };

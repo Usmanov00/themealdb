@@ -1,10 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import axios from "axios";
+import ReactPlayer from "react-player";
 
 const MealInfo = () => {
   const {id} = useParams()
-  const [latest, setLatest] = useState({})
+  const [meal, setMeal] = useState({})
   const [ingredients, setIngredients] = useState([])
   const getIngredients = (meal) => {
     let result = []
@@ -18,7 +19,7 @@ const MealInfo = () => {
   useEffect(() => {
     axios(`https://www.themealdb.com/api/json/v2/1/lookup.php?i=${id}`)
       .then(res => {
-        setLatest(res.data.meals[0])
+        setMeal(res.data.meals[0])
         getIngredients(res.data.meals[0])
       })
   }, [id])
@@ -27,8 +28,8 @@ const MealInfo = () => {
       <div className="container">
         <div className="row">
           <div className="col-4">
-            <h3 className="title">{latest.strMeal}</h3>
-            <img src={latest.strMealThumb} alt="" width={300}/>
+            <h3 className="title">{meal.strMeal}</h3>
+            <img src={meal.strMealThumb} alt="" width={300}/>
           </div>
           <div className="col-8">
             <div>
@@ -55,9 +56,12 @@ const MealInfo = () => {
             <div className="instructions-box">
             {
 
-              latest.strInstructions
+              meal.strInstructions
             }
-              {latest.strMeasure1}
+              {meal.strMeasure1}
+            </div>
+            <div className="video">
+              <ReactPlayer url={meal.strYoutube}/>
             </div>
           </div>
         </div>
